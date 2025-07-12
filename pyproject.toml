@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "backpropagation"
+version = "0.1.0"
+description = "Rete neurale feed-forward semplice con TensorFlow e Keras"
+authors = ["Il Tuo Nome <email@example.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{ include = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+tensorflow = "^2.16.1"
+numpy = "^1.26.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
