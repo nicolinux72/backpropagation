@@ -1,41 +1,36 @@
 \documentclass{article}
 
 % Language setting
-% Replace `english' with e.g. `spanish' to change the document language
 \usepackage[english]{babel}
 
 % Set page size and margins
-% Replace `letterpaper' with `a4paper' for UK/EU standard size
 \usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
 % Useful packages
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{float}
-
-
 \usepackage[most]{tcolorbox}
 
+% Bibliography
 \usepackage[backend=biber, style=authoryear, sorting=ydnt]{biblatex}
-\addbibresource{sample.bib}  
+\addbibresource{sample.bib}
 
-
+% Hyperlinks (load last)
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
-\usepackage{amssymb}
+\usepackage[capitalize]{cleveref}  % <-- subito dopo hyperref
 
-
-
+% Code highlighting
 \usepackage{minted}
 
+% Custom command
 \newcommand{\authornote}{
 Mathematical principles behind it date back to \textcite{kelley1960} and one of the earliest known implementations of backpropagation can be traced back to \textcite{werbos1974}, an aerospace engineer who introduced the concept in his 1974 Ph.D. thesis at Harvard University titled "Beyond Regression: New Tools for Prediction and Analysis in the Behavioral Sciences." Werbos recognized that this algorithm could be applied not only to neural networks but to a broader range of predictive models. Despite this early insight, his work remained largely unnoticed by the mainstream AI community for nearly a decade.}
 
-
+% Title and author
 \title{Backpropagation primer with numerical example and Python script}
 \author{Nicola Santi}
-
-\usepackage{hyperref}
-\usepackage[capitalize]{cleveref}  % subito dopo
 
 
 \begin{document}
@@ -108,23 +103,23 @@ The linear transformation inside each layer multiplies the input vector $\displa
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{images/activation functions.png}
-    \caption{Some common activation functions}    
-    
+    \caption{Some common activation functions}
+
 \end{figure}
 
-A potentially non-linear transformation called activation function then is applied to vector $\displaystyle \mathbf{a}$. Common examples of this kind of functions are sofmax, ReLU or Sigmoid  (see Figure above from  \url{www.researchgate.net}). In turn, the result of this activation function becomes the input of the next layer $\displaystyle \mathbf{z}^{( l)} =h(\mathbf{a}^{( l)})$. The superscripts in parentheses indicate the layer to which each variable refers. 
+A potentially non-linear transformation called activation function then is applied to vector $\displaystyle \mathbf{a}$. Common examples of this kind of functions are sofmax, ReLU or Sigmoid  (see Figure above from  \url{www.researchgate.net}). In turn, the result of this activation function becomes the input of the next layer $\displaystyle \mathbf{z}^{( l)} =h(\mathbf{a}^{( l)})$. The superscripts in parentheses indicate the layer to which each variable refers.
 
 Summarizing and formalizing, for each layer $\displaystyle l$ we have:
 
 \begin{gather*}
 \mathbf{a}^{( l)} =W^{( l)}\mathbf{z}^{( l-1)}\\
 \mathbf{z}^{( l)} =h^{( l)}\left(\mathbf{a}^{( l)}\right)\\
-M^{( l)}=K^{( l-1)} \ 
+M^{( l)}=K^{( l-1)} \
 \end{gather*}
 
 The loss function is simply the mean square of the errors $E_{n}(\mathbf{y}) =\frac{1}{2}\sum ( y_{mn} -t_{mn})^{2}$, where $n$ denotes a single data point.   \\
 
-A couple of definitions and a few remarks conclude the presentation of our network: 
+A couple of definitions and a few remarks conclude the presentation of our network:
 \begin{itemize}
     \item $\displaystyle \mathbf{x} =\mathbf{z}^{( 0)}$   is the input of the whole neural network;
     \item $\displaystyle \mathbf{y} =\mathbf{z}^{( L)}$  is the output of the whole neural network;
@@ -133,7 +128,7 @@ A couple of definitions and a few remarks conclude the presentation of our netwo
     \item $\displaystyle K^{( l)}$ is the dimension of the layer $l$ output $\displaystyle \mathbf{z}^{(l)} \in \mathbb{R}^{K^{( l)}}$;
     \item $\displaystyle K^{( l-1)}=M^{(l)} \ $ obviously, the size of the output of each level must match the next layer input;
 \end{itemize}
-\ 
+\
 \begin{tcolorbox}[colback=gray!10, colframe=gray!50, title=Note]
 For didactic purposes, the last layer $L$ has no activation function or, and the same thing, uses the identity function $h(\textbf{a})=\textbf{a}$. We will return to this point in the section \ref{sec:last-layer}.
 For similar reasons, each level has no bias.
@@ -144,7 +139,7 @@ The superscripts in parentheses, as said, indicate the layer to which each varia
 \begin{gather*}
 \mathbf{a} =W\mathbf{z}^{( l-1)}\\
 \mathbf{z} =h(\mathbf{a})\\
-M=K^{( l-1)} \ 
+M=K^{( l-1)} \
 \end{gather*}
 
 \textbf{Python code:} we can declare the model just described with a few lines of Python using the well-known keras library.
@@ -183,9 +178,9 @@ In each layer $\displaystyle l$ we have two simple derivatives to deal with:
 \frac{\partial a_{k}}{\partial z_{m}^{( l-1)}} \ =\ w_{k,m} \label{eq:from-z} \ \
 \end{gather}
 
-Taking as a reference the circled elements in Figure \ref{fig:last-details} : we know from \ref{sec:matrix} that $\displaystyle a_{2} =w_{2,1} z_{1} +\ w_{2,2} z_{2} +\ w_{2,3} z_{3}$ so derivative of $\displaystyle a_{2}$ from $\displaystyle w_{2,3}$ is simply $\displaystyle z_{2}$. Or, conversely, the derivative of $\displaystyle a_{2}$ from $\displaystyle z_{2}$ is  $\displaystyle w_{2,3}$.\\
+Taking as a reference the circled elements in Figure \ref{fig:last-details} : we know from paragraph \ref{sec:matrix} that $\displaystyle a_{2} =w_{2,1} z_{1} +\ w_{2,2} z_{2} +\ w_{2,3} z_{3}$ so derivative of $\displaystyle a_{2}$ from $\displaystyle w_{2,3}$ is simply $\displaystyle z_{2}$. Or, conversely, the derivative of $\displaystyle a_{2}$ from $\displaystyle z_{2}$ is  $\displaystyle w_{2,3}$.\\
 
-\textbf{Spoiler alert}: the \eqref{eq:from-z}, on a closer inspection, already connects to the previous layer being the input of layer $\displaystyle l$ the output of the previous one but it is not yet the derivative with respect to $\textbf{a}^{l-1}$ that we will calculate in the next paragraph.\\
+\textbf{Note}: the \eqref{eq:from-z}, on a closer inspection, already connects to the previous layer being the input of layer $\displaystyle l$ the output of the previous one but it is not yet the derivative with respect to $\textbf{a}^{l-1}$ that we will calculate in the next paragraph.\\
 
 \begin{figure}[H]
     \centering
@@ -200,7 +195,7 @@ Taking as a reference the circled elements in Figure \ref{fig:last-details} : we
 \begin{gather}
 \frac{\partial a_{2}}{\partial w_{2,3}} \ =\ z_{3}^{( 1)} =0.93 \notag  \\
 \notag\\
-\frac{\partial a_{2}}{\partial z_{3}^{( 1)}} \ =\ w_{2,3} \ =\ 0.6 \notag 
+\frac{\partial a_{2}}{\partial z_{3}^{( 1)}} \ =\ w_{2,3} \ =\ 0.6 \notag
 \end{gather}
 
 \begin{center}\rule{0.9\linewidth}{0.3pt}\end{center}
@@ -230,10 +225,10 @@ As noticed, the derivative  \eqref{eq:from-z} already links current layer to pre
 
 
 \begin{gather}
-\frac{\partial z_{m}^{( l-1)}}{\partial a_{m}^{( l-1)}} \ =\dot{h}^{( l-1)} (a_{m}^{(l-1)})\label{eq:prev} 
+\frac{\partial z_{m}^{( l-1)}}{\partial a_{m}^{( l-1)}} \ =\dot{h}^{( l-1)} (a_{m}^{(l-1)})\label{eq:prev}
 \end{gather}
 
-This, obviously, involves the derivative of activation function $h^{l-1}()$. \\   
+This, obviously, involves the derivative of activation function $h^{l-1}()$. \\
 
 \textbf{Our example:} Again, using  Figure \eqref{fig:example}, we calculate the derivative of the third component of the first-level output $z_{3}^{( 1)}$ (which is also the third component of the second-level input) based on the $a_{3}^{( 1)}$. Remember that, in our example, the activation of layer $L-1$ is $tanh()$ :
 
@@ -246,8 +241,8 @@ This, obviously, involves the derivative of activation function $h^{l-1}()$. \\
 Then, using the \eqref{eq:from-z} and the \ref{eq:prev}, it is possible to obtain the derivative of $\textbf{a}$ with respect to the previous $\textbf{a}^{(l-1)}$:
 
 \begin{gather}
-\frac{\partial a_{k}^{(l)} }{ \partial a_{m}^{( l-1)}}  
-= \underbrace{\frac{\partial z_{m}^{( l-1)}}{\partial a_{m}^{( l-1)}}}_{\eqref{eq:prev}} \ 
+\frac{\partial a_{k}^{(l)} }{ \partial a_{m}^{( l-1)}}
+= \underbrace{\frac{\partial z_{m}^{( l-1)}}{\partial a_{m}^{( l-1)}}}_{\eqref{eq:prev}} \
 \underbrace{\frac{\partial a_{k}^{( l)}}{\partial z_{m}^{( l-1)}}}_{\eqref{eq:from-z}} \
 =\dot{h}^{( l-1)}( a_{m}^{( l-1)}) \ w_{k,m}^{( l)} \label{eq:a-prev}
 \end{gather}\\
@@ -263,17 +258,17 @@ Then, using the \eqref{eq:from-z} and the \ref{eq:prev}, it is possible to obtai
 
 
 \section{Backpropagation algotrithm}
-To train our model we need to compute the derivative (more precisely the gradient) of each loss function $\displaystyle E_{n}(\mathbf{y}) =\frac{1}{2}\sum ( y_{in} -t_{in})^{2}$ with respect to all model parameters $w_{k,m}$. 
+To train our model we need to compute the derivative (more precisely the gradient) of each loss function $\displaystyle E_{n}(\mathbf{y}) =\frac{1}{2}\sum ( y_{in} -t_{in})^{2}$ with respect to all model parameters $w_{k,m}$.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{images/backprop.png}
-    \caption{Backpropagation move from layer to previuos one using $\textbf{a}$} derivatives and then compute gradient respect with $W$.   
+    \caption{Backpropagation move from layer to previuos one using $\textbf{a}$} derivatives and then compute gradient respect with $W$.
     \label{fig:enter-label}
 \end{figure}
 
 
-The basic idea of backpropagation is to calculate the derivative of $E$ with respect to all $\textbf{a}$ starting from the last layer $L$ and proceeding backward using \eqref{eq:a-prev} , moving in reverse we could reuse the calculations already made during the forward way.   
+The basic idea of backpropagation is to calculate the derivative of $E$ with respect to all $\textbf{a}$ starting from the last layer $L$ and proceeding backward using \eqref{eq:a-prev} , moving in reverse we could reuse the calculations already made during the forward way.
 
 Having obtained the derivatives with respect to each $\textbf{a}$, we have all the information needed to calculate, using \eqref{eq:from-w}, the derivatives with respect to each $W$ which are the final objective of our algorithm.\\
 
@@ -283,18 +278,17 @@ Let us formalize backpropagation algorithm in the easy steps below:
     \item Calculate the derivative of $\textbf{a}^{L}$ with respect to $W^{L}$ using \eqref{eq:from-w};
     \item Using \eqref{eq:a-prev} we move to previous layer $L-1$ and derive $\textbf{a}^{L}$ with respect to $\textbf{a}^{L-1}$
     \item Repeat steps 2 and 3 until we reach the first layer
-\end{enumerate}
-
-Let's start!
+\end{enumerate}\ \\
+Let's do it!
 
 \subsection{Last layer}\label{sec:last-layer}
 
 We begin by noting how the derivative of $E(W)$ with respect to the last layer has an understandable meaning (remembering that $\textbf{y}=\textbf{a}^{(L))}$):
 
 \begin{equation*}
-\frac{\partial E}{\partial a_{k}^{( L)}} 
-=\frac{\partial \frac{1}{2}\sum ( a_{i} -t_{i})^{2}}{\partial a_{k}^{( L)}} 
-=\frac{\partial \frac{1}{2}\sum ( y_{i} -t_{i})^{2}}{\partial a_{k}^{( L)}} 
+\frac{\partial E}{\partial a_{k}^{( L)}}
+=\frac{\partial \frac{1}{2}\sum ( a_{i} -t_{i})^{2}}{\partial a_{k}^{( L)}}
+=\frac{\partial \frac{1}{2}\sum ( y_{i} -t_{i})^{2}}{\partial a_{k}^{( L)}}
 =\ y_{k} -t_{k}
 \end{equation*}
 
@@ -302,7 +296,7 @@ It is exactly error of the component $\displaystyle k$ so, for convenience of no
 
 
 \begin{equation}
-\delta _{k}^{( l)} \equiv \frac{\partial E}{\partial a_{k}^{( l)}} \label{eq:error} 
+\delta _{k}^{( l)} \equiv \frac{\partial E}{\partial a_{k}^{( l)}} \label{eq:error}
 \end{equation}
 
 \ \\
@@ -324,8 +318,8 @@ As said, in our simplified model the last layer has no activation function: if t
 We complete the last layer by deriving $\textbf{a}$ with respect to each element $W$. We are helped by \eqref{eq:from-w} and \eqref{eq:error}.
 
 \begin{gather*}
-\frac{\partial E}{\partial w_{k,m}^{L}} 
-= \frac{\partial E}{\partial a_{k}^{L}} \frac{\partial a_{k}^{L}}{\partial w_{k,m}} \ =\ \delta_k^{L} \ z_{m}^{( l-1)} \label{eq:from-w} 
+\frac{\partial E}{\partial w_{k,m}^{L}}
+= \frac{\partial E}{\partial a_{k}^{L}} \frac{\partial a_{k}^{L}}{\partial w_{k,m}} \ =\ \delta_k^{L} \ z_{m}^{( l-1)} \label{eq:from-w}
 \end{gather*}\\
 
 \textbf{Our example:}  compute derivative for each  $w_{k,m}$ of last layer $L$
@@ -333,12 +327,12 @@ We complete the last layer by deriving $\textbf{a}$ with respect to each element
 
 {\small
 \begin{gather*}
-\frac{\partial E}{\partial w_{1,1}^{( 2)}} \ =\ -0.52\ ( 0.46 ) = -0.24 \ ;\ \ \ 
-\frac{\partial E}{\partial w_{1,2}^{( 2)}} \ =\ -0.52\ ( 0.80 ) = -0.41 \ ;\ \ \ 
+\frac{\partial E}{\partial w_{1,1}^{( 2)}} \ =\ -0.52\ ( 0.46 ) = -0.24 \ ;\ \ \
+\frac{\partial E}{\partial w_{1,2}^{( 2)}} \ =\ -0.52\ ( 0.80 ) = -0.41 \ ;\ \ \
 \frac{\partial E}{\partial w_{1,3}^{( 2)}} \ =\ -0.52\ ( 0.93 ) = -0.48 \\
 \\
-\frac{\partial E}{\partial w_{2,1}^{( 2)}} \ =\ -0.01\ ( 0.46 ) = -0.00 \ ;\ \ \ 
-\frac{\partial E}{\partial w_{2,2}^{( 2)}} \ =\ -0.01\ ( 0.80 ) = -0.01 \ ;\ \ \ 
+\frac{\partial E}{\partial w_{2,1}^{( 2)}} \ =\ -0.01\ ( 0.46 ) = -0.00 \ ;\ \ \
+\frac{\partial E}{\partial w_{2,2}^{( 2)}} \ =\ -0.01\ ( 0.80 ) = -0.01 \ ;\ \ \
 \frac{\partial E}{\partial w_{2,3}^{( 2)}} \ =\ -0.01\ ( 0.93 ) = -0.01
 \end{gather*}
 }
@@ -346,13 +340,13 @@ We complete the last layer by deriving $\textbf{a}$ with respect to each element
 
 \subsection{Previous layer}\label{sec:prev-layer}
 
- Returning to the level $L-1$, we should note how the modification of each $a_{m}^{(L-1)}$ impacts on each $a_{k}^{(L)}$ as anticipated in Paragraph \ref{sec:matrix}. With the help of Figure \ref{fig:example}, let us convince ourselves that each element $k$ of $\textbf{a}^{L}$ is in fact modified by $a_{m}^{(L-1)}$ because it equals $\ a_{k} =... +\ w_{k,m} z_{m} +...$. In other words, each row (vector) of the matrix $W$ is multiplied by $\textbf{z}^{L-1}$. Please note how the variation is weighted by the coefficient $w_{k,m}$. 
+ Returning to the level $L-1$, we should note how the modification of each $a_{m}^{(L-1)}$ impacts on each $a_{k}^{(L)}$ as anticipated in Paragraph \ref{sec:matrix}. With the help of Figure \ref{fig:example}, let us convince ourselves that each element $k$ of $\textbf{a}^{L}$ is in fact modified by $a_{m}^{(L-1)}$ because it equals $\ a_{k} =... +\ w_{k,m} z_{m} +...$. In other words, each row (vector) of the matrix $W$ is multiplied by $\textbf{z}^{L-1}$. Please note how the variation is weighted by the coefficient $w_{k,m}$.
 
 Thus, using the usual rules of derivation, we obtain that:
 
 \begin{gather*}
 \delta _{m}^{( L-1)} =\frac{\partial E}{\partial a_{m}^{( L-1)}} \ =\sum _{k}^{K^{( L)}}
-\underbrace{\frac{\partial z_{m}^{( L-1)}}{\partial a_{m}^{( L-1)}}\frac{\partial a_{k}^{( L)}}{\partial z_{m}^{( L-1)}}}_{\eqref{eq:a-prev}} \ 
+\underbrace{\frac{\partial z_{m}^{( L-1)}}{\partial a_{m}^{( L-1)}}\frac{\partial a_{k}^{( L)}}{\partial z_{m}^{( L-1)}}}_{\eqref{eq:a-prev}} \
 \underbrace{\frac{\partial E}{\partial a_{k}^{( L)}}}_{\eqref{eq:error}}\\
 \\
 =\dot{h}^{( L-1)}\left( a_{m}^{( L-1)}\right)\sum _{k}^{K^{( L)}} \ w_{k,m}^{( L)} \ \delta _{k}^{( L)} \ \ \\
@@ -374,13 +368,13 @@ Now compute the derivation with respect to $W^{L-1}$
 
 {\small
 \begin{gather*}
-\frac{\partial E}{\partial w_{1,1}^{( 1)}} \ =\ -0.044\ ( 1 ) = -0.04 \ ;\quad 
+\frac{\partial E}{\partial w_{1,1}^{( 1)}} \ =\ -0.044\ ( 1 ) = -0.04 \ ;\quad
 \frac{\partial E}{\partial w_{1,2}^{( 1)}} \ =\ -0.044\ ( 2 ) = -0.09 \ ;\\
 \\
-\frac{\partial E}{\partial w_{2,1}^{( 1)}} \ =\ -0.039\ ( 1 ) = -0.04 \ ;\quad 
+\frac{\partial E}{\partial w_{2,1}^{( 1)}} \ =\ -0.039\ ( 1 ) = -0.04 \ ;\quad
 \frac{\partial E}{\partial w_{2,2}^{( 1)}} \ =\ -0.039\ ( 2 ) = -0.08 \ ;\\
 \\
-\frac{\partial E}{\partial w_{3,1}^{( 1)}} \ =\ -0.020\ ( 1 ) = -0.02 \ ;\quad 
+\frac{\partial E}{\partial w_{3,1}^{( 1)}} \ =\ -0.020\ ( 1 ) = -0.02 \ ;\quad
 \frac{\partial E}{\partial w_{3,2}^{( 1)}} \ =\ -0.020\ ( 2 ) = -0.04
 \end{gather*}
 }
@@ -431,12 +425,12 @@ The output of the script confirms our calculations to an accuracy level of more 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{images/output.png}
-    
+
 \end{figure}
 
 \section{Conclusions}
 
-In this article we have tried to introduce the well-known backpropagation algorithm by providing the theoretical elements necessary for understanding and a numerical example with which to compare the results obtained. The presentation is completed by a simple Python script with keras and tensorflow available on github.
+In this article we have tried to introduce the well-known backpropagation algorithm by providing the theoretical elements necessary for understanding and a numerical example with which to compare the results obtained. The presentation is completed by a simple Python script with keras and tensorflow available on \href{github.com/nicolinux72/backpropagation.git}{github}.
 
 
 \nocite{*}
