@@ -1,7 +1,7 @@
 # A Primer on Backpropagation with a Numerical Example, Diagrams and Python Code
 A self-contained introduction to the well-known backpropagation algorithm illustrated step by step, providing the mathematical elements necessary for understanding and a numerical example with which to verify what has been learned. A Python script with Keras and TensorFlow to verify the calculations performed completes the exposition (available on GitHub). 
 
-https://medium.com/@nicolasanti_43152/a-primer-on-backpropagation-with-a-numerical-example-diagrams-and-python-code-254c0ea2fa49
+https://medium.com/@nicolasanti_43152/254c0ea2fa49
 
 # Introduction 
 Backpropagation, short for backward propagation of errors, is perhaps the most iconic algorithm of modern machine learning. Suffice it to say that, until the mid-1980s, no one believed in the possibility of training a multilayer network anymore! The story is very interesting and reveals how a mistaken belief can delay scientific development even by decades. 
